@@ -13,13 +13,13 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.System.Acts.Wait,
 		C3.Plugins.System.Acts.GoToLayout,
-		C3.Plugins.Sprite.Acts.SetSize,
-		C3.Plugins.System.Acts.SetLayerVisible,
-		C3.Plugins.System.Cnds.IsGroupActive,
-		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Behaviors.lunarray_LiteTween.Acts.Start,
 		C3.Behaviors.lunarray_LiteTween.Acts.SetTarget,
+		C3.Plugins.Sprite.Acts.SetSize,
+		C3.Plugins.System.Acts.SetLayerVisible,
 		C3.Behaviors.Sin.Acts.SetEnabled,
+		C3.Plugins.System.Cnds.IsGroupActive,
+		C3.Plugins.System.Cnds.TriggerOnce,
 		C3.Plugins.System.Cnds.EveryTick,
 		C3.Plugins.System.Cnds.CompareVar,
 		C3.Plugins.TiledBg.Cnds.IsOnLayer,
@@ -33,13 +33,13 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Exps.X,
 		C3.Plugins.Sprite.Exps.Y,
 		C3.Plugins.Sprite.Cnds.CompareFrame,
+		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.Sprite.Cnds.CompareX,
 		C3.Plugins.System.Exps.random,
-		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.System.Acts.SubVar,
 		C3.Plugins.System.Acts.ToggleBoolVar,
-		C3.JavaScriptInEvents.Logo_Event66_Act1,
+		C3.JavaScriptInEvents.Menu_Event77_Act1,
 		C3.Plugins.System.Cnds.CompareBoolVar,
 		C3.Plugins.System.Acts.SetGroupActive,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
@@ -53,7 +53,17 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetPosToObject,
 		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Touch.Cnds.IsTouchingObject,
-		C3.JavaScriptInEvents.SaveGame_Event1_Act1
+		C3.JavaScriptInEvents.SaveGame_Event1_Act1,
+		C3.Plugins.Sprite.Acts.SetX,
+		C3.Plugins.Sprite.Acts.SetPosToObject,
+		C3.Plugins.System.Acts.AddVar,
+		C3.Plugins.System.Acts.ResetPersisted,
+		C3.Plugins.System.Acts.ResetGlobals,
+		C3.Plugins.System.Acts.SetBoolVar,
+		C3.Plugins.System.Cnds.Compare,
+		C3.Plugins.System.Exps.tokenat,
+		C3.Plugins.Sprite.Acts.SetAnim,
+		C3.Plugins.System.Exps.int
 	];
 };
 self.C3_JsPropNameTable = [
@@ -91,6 +101,12 @@ self.C3_JsPropNameTable = [
 	{Text: 0},
 	{alert: 0},
 	{authResponse: 0},
+	{bg_color_belajar: 0},
+	{state_frame: 0},
+	{pelajari_huruf_judul: 0},
+	{frame: 0},
+	{indicator: 0},
+	{modal: 0},
 	{isLoggedIn: 0},
 	{MENU_STATE: 0},
 	{CAMERA_STATE: 0},
@@ -99,7 +115,9 @@ self.C3_JsPropNameTable = [
 	{USERNAME: 0},
 	{SUPABASE_ID: 0},
 	{SUPABASE_USERNAME: 0},
-	{SUPABASE_SUCCESS: 0}
+	{SUPABASE_SUCCESS: 0},
+	{pelajari_huruf_frame: 0},
+	{modalOpened: 0}
 ];
 
 self.InstanceType = {
@@ -120,5 +138,9 @@ self.InstanceType = {
 	cancelKeybpard: class extends self.ITiledBackgroundInstance {},
 	Text: class extends self.ITextInstance {},
 	alert: class extends self.ISpriteInstance {},
-	authResponse: class extends self.IJSONInstance {}
+	authResponse: class extends self.IJSONInstance {},
+	bg_color_belajar: class extends self.ITiledBackgroundInstance {},
+	pelajari_huruf_judul: class extends self.ISpriteInstance {},
+	indicator: class extends self.ISpriteInstance {},
+	modal: class extends self.ISpriteInstance {}
 }
