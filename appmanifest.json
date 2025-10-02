@@ -1,7 +1,7 @@
 {
-	"name": "Basalogy",
-	"short_name": "Basalogy",
-	"description": "Game edukasi kebudayaan bali",
+	"name": "Basalogy - Perjalanan Menjadi Duta Budaya Bali",
+	"short_name": "Basalogy - Perjalanan Menjadi Duta Budaya Bali",
+	"description": "Basalogy - Perjalanan Menjadi Duta Budaya Bali",
 	"start_url": "index.html",
 	"display": "fullscreen",
 	"orientation": "landscape",
