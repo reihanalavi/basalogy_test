@@ -2,6 +2,13 @@
 
 const scriptsInEvents = {
 
+	async ["Tes-SkillMenulis_Event45_Act6"](runtime, localVars)
+	{
+		const res = globalThis.storeScore('skill_menulis_tests', runtime.globalVars.jawaban_benar * 10).then((value) => {
+		    console.log(value)
+		});
+	},
+
 	async SaveGame_Event1_Act1(runtime, localVars)
 	{
 		const savedgame = JSON.parse(localStorage.getItem('user'));
@@ -19,7 +26,7 @@ const scriptsInEvents = {
 		}
 	},
 
-	async Menu_Event77_Act1(runtime, localVars)
+	async Menu_Event82_Act2(runtime, localVars)
 	{
 		const res = globalThis.loginOrRegister(runtime.globalVars.USERNAME).then((value) => {
 		    runtime.globalVars.SUPABASE_ID = value.data.id;
@@ -29,6 +36,20 @@ const scriptsInEvents = {
 		    runtime.globalVars.isLoggedIn = value.success;
 		
 		    localStorage.setItem('user', JSON.stringify(value));
+		
+		    localStorage.getItem('user')
+		});
+	},
+
+	async ["CobaTulis-SkillMenulis_Event27_Act3"](runtime, localVars)
+	{
+		console.log("Brushed", runtime.globalVars.brushed);
+		const score = Math.floor(
+		  (runtime.globalVars.brushed / runtime.globalVars.totalBrush) * 100
+		);
+		console.log("Score: ", score);
+		const res = globalThis.storeScore('skill_menulis_coba_tulises', score).then((value) => {
+		    console.log(value)
 		});
 	}
 };

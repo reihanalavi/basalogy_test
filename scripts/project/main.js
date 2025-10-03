@@ -153,3 +153,77 @@ globalThis.getUser = async function (nama_lengkap) {
     return [];
   }
 };
+
+
+globalThis.storeScore = async function (namaTabel, score) {
+  try {
+    // Ambil user dari localStorage
+    const userRaw = localStorage.getItem('user');
+    if (!userRaw) {
+      console.error("❌ storeScore: no user in localStorage");
+      return { success: false, error: "no user in localStorage", data: null };
+    }
+
+    let user;
+    try {
+      user = JSON.parse(userRaw);
+    } catch (e) {
+      console.error("❌ storeScore: failed to parse localStorage user", e);
+      return { success: false, error: "invalid user in localStorage", data: null };
+    }
+
+    const nama_lengkap = user?.data?.username || user?.username || null;
+    if (!nama_lengkap) {
+      console.error("❌ storeScore: username not found in localStorage.user.data.username");
+      return { success: false, error: "username not found", data: null };
+    }
+
+    // VALIDASI NAMA TABEL (safeguard untuk mencegah SQL-injection-like misuse)
+    // Preferensi: pakai allowlist jika kamu cuma mengizinkan beberapa tabel.
+    const ALLOWED_TABLES = ["skill_menulis_tests", "skill_menulis_coba_tulises"]; // <-- sesuaikan jika perlu
+    if (!ALLOWED_TABLES.includes(namaTabel)) {
+      // fallback: very strict regex (lowercase, digits, underscore)
+      const safeName = typeof namaTabel === "string" && /^[a-z0-9_]+$/.test(namaTabel);
+      if (!safeName) {
+        console.error("❌ storeScore: invalid table name", namaTabel);
+        return { success: false, error: "invalid table name", data: null };
+      }
+      // optional: still warn
+      console.warn("⚠️ storeScore: table not in allowlist, proceeding with regex-validated name");
+    }
+
+    // Payload
+    const payload = {
+      nama_lengkap,
+      skor: score,
+      created_at: new Date().toISOString()
+    };
+
+    // Do POST to Supabase REST
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${namaTabel}`, {
+      method: "POST",
+      headers: {
+        ...headers, // asumsikan headers memuat Authorization / apikey yg kamu pakai
+        "Content-Type": "application/json",
+        "Prefer": "return=representation"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      console.error("❌ storeScore: insert failed:", text);
+      return { success: false, error: text, data: null };
+    }
+
+    const created = await res.json();
+    // Supabase return=representation biasanya mengembalikan array of created rows
+    const row = Array.isArray(created) && created.length > 0 ? created[0] : created;
+
+    console.log("✅ storeScore: inserted", row);
+    return { success: true, data: row, error: null };
+  } catch (err) {
+    console.error("❌ storeScore exception:", err);
+    return { success: false, error: err.message || String(err), data: null };
+  }
+};
