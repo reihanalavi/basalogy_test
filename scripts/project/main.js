@@ -227,3 +227,54 @@ globalThis.storeScore = async function (namaTabel, score) {
     return { success: false, error: err.message || String(err), data: null };
   }
 };
+
+globalThis.getRanks = async function () {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/users`,
+      {
+        method: "GET",
+        headers
+      }
+    );
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error("❌ getRanks error:", err);
+      return { ranks: [], this_user_rank: null };
+    }
+
+    let data = await res.json();
+
+    // Urutkan by total_score desc
+    data.sort((a, b) => (b.total_score || 0) - (a.total_score || 0));
+
+    // Tambahkan rank ke tiap user
+    data = data.map((u, i) => ({
+      ...u,
+      rank: i + 1,
+    }));
+
+    // Cari user sekarang dari localStorage
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+    let thisUserRank = null;
+
+    if (currentUser && currentUser.data && currentUser.data.username) {
+      const found = data.find((u) => u.nama_lengkap === currentUser.data.username);
+      if (found) {
+        thisUserRank = found.rank;
+      }
+    }
+
+    console.log("✅ Ranks calculated:", data);
+    console.log("➡️ This user rank:", thisUserRank);
+
+    return {
+      ranks: data,
+      this_user_rank: thisUserRank,
+    };
+  } catch (err) {
+    console.error("❌ getRanks exception:", err.message);
+    return { ranks: [], this_user_rank: null };
+  }
+};

@@ -2478,6 +2478,7 @@ self.C3_ExpressionFuncs = [
 			const f2 = p._GetNode(2).GetBoundMethod();
 			return () => C3.lerp(n0.ExpObject(), (n1.ExpInstVar() - f2(400, 500)), 0.08);
 		},
+		() => 4,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
 			return () => C3.lerp(f0("KEYBOARD"), 100, 0.08);
@@ -2504,7 +2505,7 @@ self.C3_ExpressionFuncs = [
 		() => 1.5,
 		() => "tes",
 		() => "coba_tulis",
-		() => 4,
+		() => "peringkat",
 		() => 90,
 		() => "Login",
 		() => "spasi",
@@ -2532,6 +2533,29 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "home",
 		() => "profile",
+		() => "Peringkat",
+		() => "i",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and("rank_", v0.GetValue());
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			const v2 = p._GetNode(2).GetVar();
+			return () => f0(v1.GetValue(), (v2.GetValue() - 1), "|");
+		},
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const v1 = p._GetNode(1).GetVar();
+			const v2 = p._GetNode(2).GetVar();
+			return () => (f0(v1.GetValue(), (v2.GetValue() - 1), "|") + " poin");
+		},
+		() => "user",
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and("#", v0.GetValue());
+		},
 		() => 1.2,
 		() => "Ornaments",
 		p => {
@@ -2629,7 +2653,6 @@ self.C3_ExpressionFuncs = [
 		() => "submit",
 		() => "colors_inactive",
 		() => "colors",
-		() => "i",
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			const v1 = p._GetNode(1).GetVar();
