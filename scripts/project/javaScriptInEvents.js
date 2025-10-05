@@ -4,7 +4,7 @@ const scriptsInEvents = {
 
 	async SaveGame_Event1_Act1(runtime, localVars)
 	{
-		const savedgame = JSON.parse(localStorage.getItem('user'));
+		const savedgame = JSON.parse(localStorage.getItem('user_basalogy'));
 		console.log(savedgame);
 		if(savedgame) {
 		    runtime.globalVars.isLoggedIn = true;
@@ -19,6 +19,13 @@ const scriptsInEvents = {
 		}
 	},
 
+	async ["Tes-SkillMenulis_Event45_Act6"](runtime, localVars)
+	{
+		const res = globalThis.storeScore('skill_menulis_tests', runtime.globalVars.jawaban_benar * 10).then((value) => {
+		    console.log(value)
+		});
+	},
+
 	async ["CobaTulis-SkillMenulis_Event27_Act3"](runtime, localVars)
 	{
 		console.log("Brushed", runtime.globalVars.brushed);
@@ -27,13 +34,6 @@ const scriptsInEvents = {
 		);
 		console.log("Score: ", score);
 		const res = globalThis.storeScore('skill_menulis_coba_tulises', score).then((value) => {
-		    console.log(value)
-		});
-	},
-
-	async ["Tes-SkillMenulis_Event45_Act6"](runtime, localVars)
-	{
-		const res = globalThis.storeScore('skill_menulis_tests', runtime.globalVars.jawaban_benar * 10).then((value) => {
 		    console.log(value)
 		});
 	},
@@ -47,9 +47,9 @@ const scriptsInEvents = {
 		
 		    runtime.globalVars.isLoggedIn = value.success;
 		
-		    localStorage.setItem('user', JSON.stringify(value));
+		    localStorage.setItem('user_basalogy', JSON.stringify(value));
 		
-		    localStorage.getItem('user')
+		    localStorage.getItem('user_basalogy')
 		});
 	},
 

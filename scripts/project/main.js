@@ -158,7 +158,7 @@ globalThis.getUser = async function (nama_lengkap) {
 globalThis.storeScore = async function (namaTabel, score) {
   try {
     // Ambil user dari localStorage
-    const userRaw = localStorage.getItem('user');
+    const userRaw = localStorage.getItem('user_basalogy');
     if (!userRaw) {
       console.error("❌ storeScore: no user in localStorage");
       return { success: false, error: "no user in localStorage", data: null };
@@ -256,7 +256,7 @@ globalThis.getRanks = async function () {
     }));
 
     // Cari user sekarang dari localStorage
-    const currentUser = JSON.parse(localStorage.getItem("user"));
+    const currentUser = JSON.parse(localStorage.getItem("user_basalogy"));
     let thisUserRank = null;
 
     if (currentUser && currentUser.data && currentUser.data.username) {
