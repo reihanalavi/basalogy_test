@@ -7,9 +7,22 @@ const scriptsInEvents = {
 		const savedgame = JSON.parse(localStorage.getItem('user_basalogy'));
 		console.log(savedgame);
 		if(savedgame) {
+		    const res = globalThis.loginOrRegister(savedgame.data.username).then((value) => {
+		    // runtime.globalVars.SUPABASE_ID = value.data.id;
+		    // runtime.globalVars.SUPABASE_USERNAME = value.data.username;
+		    runtime.globalVars.SUPABASE_STORY = value.data.story_unlocked;
+		    // runtime.globalVars.SUPABASE_SUCCESS = value.success;
+		
+		    // runtime.globalVars.isLoggedIn = value.success;
+		
+		    localStorage.setItem('user_basalogy', JSON.stringify(value));
+		
+		    // localStorage.getItem('user_basalogy')
+		});
 		    runtime.globalVars.isLoggedIn = true;
 		    runtime.globalVars.SUPABASE_ID = savedgame.data.id;
 		    runtime.globalVars.SUPABASE_USERNAME = savedgame.data.username;
+		    runtime.globalVars.SUPABASE_STORY = savedgame.data.story_unlocked;
 		    runtime.globalVars.SUPABASE_SUCCESS = savedgame.success;
 		} else {
 		    runtime.globalVars.isLoggedIn = false;
@@ -38,7 +51,7 @@ const scriptsInEvents = {
 		});
 	},
 
-	async Menu_Event90_Act2(runtime, localVars)
+	async Menu_Event113_Act2(runtime, localVars)
 	{
 		const res = globalThis.loginOrRegister(runtime.globalVars.USERNAME).then((value) => {
 		    runtime.globalVars.SUPABASE_ID = value.data.id;
@@ -53,7 +66,7 @@ const scriptsInEvents = {
 		});
 	},
 
-	async Menu_Event97_Act9(runtime, localVars)
+	async Menu_Event120_Act9(runtime, localVars)
 	{
 const res = globalThis.getRanks().then((value) => {
     console.log(value);
@@ -65,6 +78,13 @@ const res = globalThis.getRanks().then((value) => {
     runtime.globalVars.rank_user = value.this_user_rank;
 
 });
+	},
+
+	async SkillKomunikasi_Event27_Act1(runtime, localVars)
+	{
+		const res = globalThis.updateStoryUnlocked(runtime.globalVars.komunikasi_level + 1).then((value) => {
+		    console.log(value)
+		});
 	}
 };
 

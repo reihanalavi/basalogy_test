@@ -46,8 +46,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.SubVar,
 		C3.Plugins.System.Acts.ToggleBoolVar,
 		C3.Plugins.Audio.Acts.SetVolume,
-		C3.JavaScriptInEvents.Menu_Event90_Act2,
-		C3.JavaScriptInEvents.Menu_Event97_Act9,
+		C3.Plugins.System.Exps.int,
+		C3.Plugins.System.Exps.right,
+		C3.JavaScriptInEvents.Menu_Event113_Act2,
+		C3.JavaScriptInEvents.Menu_Event120_Act9,
 		C3.Plugins.System.Acts.SetGroupActive,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Keyboard.Cnds.OnKey,
@@ -71,7 +73,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.System.Cnds.Compare,
 		C3.Plugins.Sprite.Acts.SetAnim,
-		C3.Plugins.System.Exps.int,
 		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
 		C3.Plugins.Sprite.Acts.Spawn,
 		C3.Plugins.System.Cnds.PickRandom,
@@ -92,7 +93,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Acts.CreateObject,
 		C3.Plugins.System.Cnds.Else,
 		C3.Plugins.Sprite.Cnds.OnCollision,
-		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet
+		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
+		C3.Plugins.Sprite.Acts.SetOpacity,
+		C3.Plugins.Sprite.Exps.Opacity,
+		C3.Plugins.Sprite.Exps.AnimationFrameCount,
+		C3.JavaScriptInEvents.SkillKomunikasi_Event27_Act1
 	];
 };
 self.C3_JsPropNameTable = [
@@ -158,6 +163,13 @@ self.C3_JsPropNameTable = [
 	{rank_user: 0},
 	{rank_text: 0},
 	{score_text: 0},
+	{komunikasi_bg: 0},
+	{komunikasi_chat: 0},
+	{level: 0},
+	{char: 0},
+	{komunikasi_pin: 0},
+	{character: 0},
+	{Group3: 0},
 	{isLoggedIn: 0},
 	{MENU_STATE: 0},
 	{CAMERA_STATE: 0},
@@ -169,6 +181,7 @@ self.C3_JsPropNameTable = [
 	{USERNAME: 0},
 	{SUPABASE_ID: 0},
 	{SUPABASE_USERNAME: 0},
+	{SUPABASE_STORY: 0},
 	{SUPABASE_SUCCESS: 0},
 	{pelajari_huruf_frame: 0},
 	{modalOpened: 0},
@@ -182,7 +195,11 @@ self.C3_JsPropNameTable = [
 	{brushed: 0},
 	{totalBrush: 0},
 	{selected_color: 0},
-	{firstDrawed: 0}
+	{firstDrawed: 0},
+	{komunikasi_frame: 0},
+	{komunikasi_level: 0},
+	{komunikasi_state: 0},
+	{kebudayaan_frame: 0}
 ];
 
 self.InstanceType = {
@@ -225,5 +242,10 @@ self.InstanceType = {
 	rank_panel: class extends self.ISpriteInstance {},
 	rank_user: class extends self.ISpriteInstance {},
 	rank_text: class extends self.ITextInstance {},
-	score_text: class extends self.ITextInstance {}
+	score_text: class extends self.ITextInstance {},
+	komunikasi_bg: class extends self.ISpriteInstance {},
+	komunikasi_chat: class extends self.ISpriteInstance {},
+	komunikasi_pin: class extends self.ISpriteInstance {},
+	character: class extends self.ISpriteInstance {},
+	Group3: class extends self.ISpriteInstance {}
 }

@@ -32,7 +32,8 @@ globalThis.loginOrRegister = async function (nama_lengkap) {
         success: false,
         data: {
           id: null,
-          username: null
+          username: null,
+          story_unlocked: 1
         }
       });
     }
@@ -41,13 +42,14 @@ globalThis.loginOrRegister = async function (nama_lengkap) {
 
     // 2. Kalau ada → return user pertama
     if (existing.length > 0) {
-      const user = { id: existing[0].id, nama_lengkap: existing[0].nama_lengkap };
+      const user = { id: existing[0].id, nama_lengkap: existing[0].nama_lengkap, story_unlocked: existing[0].story_unlocked };
       console.log("✅ User exists:", user);
       return({
         success: true,
         data: {
           id: user.id,
-          username: user.nama_lengkap
+          username: user.nama_lengkap,
+          story_unlocked: user.story_unlocked
         }
       });
     }
@@ -56,7 +58,8 @@ globalThis.loginOrRegister = async function (nama_lengkap) {
     const body = {
       nama_lengkap,
       created_at: now,
-      updated_at: now
+      updated_at: now,
+      story_unlocked: 1
     };
 
     const createRes = await fetch(`${SUPABASE_URL}/rest/v1/users`, {
@@ -75,7 +78,8 @@ globalThis.loginOrRegister = async function (nama_lengkap) {
         success: false,
         data: {
           id: null,
-          username: null
+          username: null,
+          story_unlocked: 1
         }
       });
     }
@@ -87,7 +91,8 @@ globalThis.loginOrRegister = async function (nama_lengkap) {
         success: true,
         data: {
           id: newUser.id,
-          username: newUser.nama_lengkap
+          username: newUser.nama_lengkap,
+          story_unlocked: newUser.story_unlocked
         }
       });
 
@@ -97,7 +102,8 @@ globalThis.loginOrRegister = async function (nama_lengkap) {
       success: false,
       data: {
         id: null,
-        username: null
+        username: null,
+        story_unlocked: 1
       }
     });
   }
@@ -276,5 +282,90 @@ globalThis.getRanks = async function () {
   } catch (err) {
     console.error("❌ getRanks exception:", err.message);
     return { ranks: [], this_user_rank: null };
+  }
+};
+
+globalThis.updateStoryUnlocked = async function (updateValue) {
+  try {
+    // 1️⃣ Ambil user dari localStorage
+    const userRaw = localStorage.getItem('user_basalogy');
+    if (!userRaw) {
+      console.error("❌ updateStoryUnlocked: no user in localStorage");
+      return { success: false, error: "no user in localStorage", data: null };
+    }
+
+    let user;
+    try {
+      user = JSON.parse(userRaw);
+    } catch (e) {
+      console.error("❌ updateStoryUnlocked: failed to parse user JSON", e);
+      return { success: false, error: "invalid user JSON", data: null };
+    }
+
+    const nama_lengkap = user?.data?.username || user?.username || null;
+    if (!nama_lengkap) {
+      console.error("❌ updateStoryUnlocked: username not found in localStorage.user.data.username");
+      return { success: false, error: "username not found", data: null };
+    }
+
+    // 2️⃣ Ambil data user dari Supabase
+    const resGet = await fetch(`${SUPABASE_URL}/rest/v1/users?nama_lengkap=eq.${nama_lengkap}`, {
+      method: "GET",
+      headers: {
+        ...headers,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!resGet.ok) {
+      const text = await resGet.text();
+      console.error("❌ updateStoryUnlocked: failed to fetch user:", text);
+      return { success: false, error: text, data: null };
+    }
+
+    const users = await resGet.json();
+    if (!Array.isArray(users) || users.length === 0) {
+      console.error("❌ updateStoryUnlocked: user not found in DB");
+      return { success: false, error: "user not found", data: null };
+    }
+
+    const currentUser = users[0];
+    const currentUnlocked = currentUser.story_unlocked ?? 0;
+
+    // 3️⃣ Cek apakah perlu update
+    if (currentUnlocked >= updateValue) {
+      console.log("ℹ️ updateStoryUnlocked: no update needed (current =", currentUnlocked, ", new =", updateValue, ")");
+      return { success: true, data: currentUser, updated: false };
+    }
+
+    // 4️⃣ Lakukan update
+    const resUpdate = await fetch(
+      `${SUPABASE_URL}/rest/v1/users?nama_lengkap=eq.${nama_lengkap}`,
+      {
+        method: "PATCH",
+        headers: {
+          ...headers,
+          "Content-Type": "application/json",
+          "Prefer": "return=representation"
+        },
+        body: JSON.stringify({ story_unlocked: updateValue })
+      }
+    );
+
+    if (!resUpdate.ok) {
+      const text = await resUpdate.text();
+      console.error("❌ updateStoryUnlocked: update failed:", text);
+      return { success: false, error: text, data: null };
+    }
+
+    const updated = await resUpdate.json();
+    const updatedUser = Array.isArray(updated) ? updated[0] : updated;
+
+    console.log("✅ updateStoryUnlocked: updated successfully to", updateValue);
+    return { success: true, data: updatedUser, updated: true };
+
+  } catch (err) {
+    console.error("❌ updateStoryUnlocked exception:", err);
+    return { success: false, error: err.message || String(err), data: null };
   }
 };

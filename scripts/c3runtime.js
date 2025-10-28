@@ -2448,6 +2448,7 @@ self.C3_ExpressionFuncs = [
 		() => "btnlogin",
 		() => "",
 		() => 999,
+		() => 5,
 		() => 3,
 		p => {
 			const n0 = p._GetNode(0);
@@ -2496,13 +2497,21 @@ self.C3_ExpressionFuncs = [
 		() => -10,
 		() => 0.4,
 		() => 1204,
+		() => "komunikasi",
+		() => "kebudayaan",
+		() => -200,
+		() => 1.5,
 		() => "back",
 		() => 1404,
 		() => "audio",
 		() => -100,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			const f1 = p._GetNode(1).GetBoundMethod();
+			const n2 = p._GetNode(2);
+			return () => f0(f1(n2.ExpInstVar(), 1));
+		},
 		() => "pelajari_hurufnya",
-		() => -200,
-		() => 1.5,
 		() => "tes",
 		() => "coba_tulis",
 		() => "peringkat",
@@ -2556,6 +2565,10 @@ self.C3_ExpressionFuncs = [
 			const v0 = p._GetNode(0).GetVar();
 			return () => and("#", v0.GetValue());
 		},
+		() => "Story",
+		() => "komunikasi_1",
+		() => "komunikasi_2",
+		() => "komunikasi_3",
 		() => 1.2,
 		() => "Ornaments",
 		p => {
@@ -2677,7 +2690,37 @@ self.C3_ExpressionFuncs = [
 			return () => Math.floor(((v0.GetValue() / v1.GetValue()) * 100));
 		},
 		() => 70,
-		() => 100
+		() => 100,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and("level_", v0.GetValue());
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			const n1 = p._GetNode(1);
+			return () => and(and(v0.GetValue(), "_"), n1.ExpInstVar());
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			return () => C3.lerp(n0.ExpObject(), n1.ExpObject(), 0.08);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => C3.lerp(n0.ExpObject(), 40, 0.08);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => (n0.ExpObject() - 1);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => C3.lerp(n0.ExpObject(), 0, 0.4);
+		},
+		p => {
+			const n0 = p._GetNode(0);
+			return () => C3.lerp(n0.ExpObject(), 100, 0.4);
+		}
 ];
 
 
