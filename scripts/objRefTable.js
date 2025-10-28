@@ -19,13 +19,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.lunarray_LiteTween.Acts.SetTarget,
 		C3.Plugins.Sprite.Acts.SetSize,
 		C3.Plugins.System.Acts.SetLayerVisible,
-<<<<<<< HEAD
-=======
 		C3.Plugins.System.Cnds.CompareBoolVar,
 		C3.Plugins.Audio.Cnds.IsTagPlaying,
 		C3.Plugins.Audio.Acts.Play,
 		C3.Plugins.Audio.Acts.Stop,
->>>>>>> origin
 		C3.Behaviors.Sin.Acts.SetEnabled,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Cnds.TriggerOnce,
@@ -48,16 +45,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.System.Acts.SubVar,
 		C3.Plugins.System.Acts.ToggleBoolVar,
-<<<<<<< HEAD
-		C3.JavaScriptInEvents.Menu_Event77_Act1,
-		C3.Plugins.System.Cnds.CompareBoolVar,
-=======
 		C3.Plugins.Audio.Acts.SetVolume,
 		C3.Plugins.System.Exps.int,
 		C3.Plugins.System.Exps.right,
 		C3.JavaScriptInEvents.Menu_Event113_Act2,
 		C3.JavaScriptInEvents.Menu_Event120_Act9,
->>>>>>> origin
 		C3.Plugins.System.Acts.SetGroupActive,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Keyboard.Cnds.OnKey,
@@ -76,19 +68,10 @@ self.C3_GetObjectRefTable = function () {
 		C3.JavaScriptInEvents.SaveGame_Event1_Act1,
 		C3.Plugins.Sprite.Acts.SetX,
 		C3.Plugins.Sprite.Acts.SetPosToObject,
-<<<<<<< HEAD
-		C3.Plugins.System.Acts.AddVar,
-=======
->>>>>>> origin
 		C3.Plugins.System.Acts.ResetPersisted,
 		C3.Plugins.System.Acts.ResetGlobals,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.System.Cnds.Compare,
-<<<<<<< HEAD
-		C3.Plugins.System.Exps.tokenat,
-		C3.Plugins.Sprite.Acts.SetAnim,
-		C3.Plugins.System.Exps.int
-=======
 		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
 		C3.Plugins.Sprite.Acts.Spawn,
@@ -115,7 +98,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Exps.Opacity,
 		C3.Plugins.Sprite.Exps.AnimationFrameCount,
 		C3.JavaScriptInEvents.SkillKomunikasi_Event27_Act1
->>>>>>> origin
 	];
 };
 self.C3_JsPropNameTable = [
@@ -159,8 +141,6 @@ self.C3_JsPropNameTable = [
 	{frame: 0},
 	{indicator: 0},
 	{modal: 0},
-<<<<<<< HEAD
-=======
 	{Audio: 0},
 	{jawaban: 0},
 	{pertanyaan: 0},
@@ -190,7 +170,6 @@ self.C3_JsPropNameTable = [
 	{komunikasi_pin: 0},
 	{character: 0},
 	{Group3: 0},
->>>>>>> origin
 	{isLoggedIn: 0},
 	{MENU_STATE: 0},
 	{CAMERA_STATE: 0},
@@ -202,11 +181,6 @@ self.C3_JsPropNameTable = [
 	{USERNAME: 0},
 	{SUPABASE_ID: 0},
 	{SUPABASE_USERNAME: 0},
-<<<<<<< HEAD
-	{SUPABASE_SUCCESS: 0},
-	{pelajari_huruf_frame: 0},
-	{modalOpened: 0}
-=======
 	{SUPABASE_STORY: 0},
 	{SUPABASE_SUCCESS: 0},
 	{pelajari_huruf_frame: 0},
@@ -226,7 +200,6 @@ self.C3_JsPropNameTable = [
 	{komunikasi_level: 0},
 	{komunikasi_state: 0},
 	{kebudayaan_frame: 0}
->>>>>>> origin
 ];
 
 self.InstanceType = {
@@ -251,9 +224,6 @@ self.InstanceType = {
 	bg_color_belajar: class extends self.ITiledBackgroundInstance {},
 	pelajari_huruf_judul: class extends self.ISpriteInstance {},
 	indicator: class extends self.ISpriteInstance {},
-<<<<<<< HEAD
-	modal: class extends self.ISpriteInstance {}
-=======
 	modal: class extends self.ISpriteInstance {},
 	Audio: class extends self.IInstance {},
 	pertanyaan: class extends self.ISpriteInstance {},
@@ -278,5 +248,4 @@ self.InstanceType = {
 	komunikasi_pin: class extends self.ISpriteInstance {},
 	character: class extends self.ISpriteInstance {},
 	Group3: class extends self.ISpriteInstance {}
->>>>>>> origin
 }

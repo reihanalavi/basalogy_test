@@ -2416,12 +2416,9 @@ self.C3_ExpressionFuncs = [
 		() => 1273,
 		() => 322,
 		() => "KEYBOARD",
-<<<<<<< HEAD
-=======
 		() => "backsound",
 		() => -5,
 		() => 0,
->>>>>>> origin
 		() => 0.88,
 		() => 1,
 		() => 990,
@@ -2432,11 +2429,6 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			return () => C3.lerp(n0.ExpObject(), 100, 0.08);
-		},
-		() => 0,
-		p => {
-			const n0 = p._GetNode(0);
-			return () => C3.lerp(n0.ExpObject(), 0, 0.08);
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -2512,12 +2504,6 @@ self.C3_ExpressionFuncs = [
 		() => "back",
 		() => 1404,
 		() => "audio",
-<<<<<<< HEAD
-		() => "pelajari_hurufnya",
-		() => -200,
-		() => 1.5,
-		() => 4,
-=======
 		() => -100,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
@@ -2529,7 +2515,6 @@ self.C3_ExpressionFuncs = [
 		() => "tes",
 		() => "coba_tulis",
 		() => "peringkat",
->>>>>>> origin
 		() => 90,
 		() => "Login",
 		() => "spasi",
@@ -2557,8 +2542,6 @@ self.C3_ExpressionFuncs = [
 		},
 		() => "home",
 		() => "profile",
-<<<<<<< HEAD
-=======
 		() => "Peringkat",
 		() => "i",
 		p => {
@@ -2586,7 +2569,6 @@ self.C3_ExpressionFuncs = [
 		() => "komunikasi_1",
 		() => "komunikasi_2",
 		() => "komunikasi_3",
->>>>>>> origin
 		() => 1.2,
 		() => "Ornaments",
 		p => {
@@ -2645,8 +2627,6 @@ self.C3_ExpressionFuncs = [
 			const f1 = p._GetNode(1).GetBoundMethod();
 			const n2 = p._GetNode(2);
 			return () => f0(f1(n2.ExpInstVar(), 1, "_"));
-<<<<<<< HEAD
-=======
 		},
 		p => {
 			const n0 = p._GetNode(0);
@@ -2740,7 +2720,6 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const n0 = p._GetNode(0);
 			return () => C3.lerp(n0.ExpObject(), 100, 0.4);
->>>>>>> origin
 		}
 ];
 
