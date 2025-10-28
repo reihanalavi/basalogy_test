@@ -32,7 +32,8 @@ globalThis.loginOrRegister = async function (nama_lengkap) {
         success: false,
         data: {
           id: null,
-          username: null
+          username: null,
+          story_unlocked: 1
         }
       });
     }
@@ -41,13 +42,14 @@ globalThis.loginOrRegister = async function (nama_lengkap) {
 
     // 2. Kalau ada → return user pertama
     if (existing.length > 0) {
-      const user = { id: existing[0].id, nama_lengkap: existing[0].nama_lengkap };
+      const user = { id: existing[0].id, nama_lengkap: existing[0].nama_lengkap, story_unlocked: existing[0].story_unlocked };
       console.log("✅ User exists:", user);
       return({
         success: true,
         data: {
           id: user.id,
-          username: user.nama_lengkap
+          username: user.nama_lengkap,
+          story_unlocked: user.story_unlocked
         }
       });
     }
@@ -56,7 +58,8 @@ globalThis.loginOrRegister = async function (nama_lengkap) {
     const body = {
       nama_lengkap,
       created_at: now,
-      updated_at: now
+      updated_at: now,
+      story_unlocked: 1
     };
 
     const createRes = await fetch(`${SUPABASE_URL}/rest/v1/users`, {
@@ -75,7 +78,8 @@ globalThis.loginOrRegister = async function (nama_lengkap) {
         success: false,
         data: {
           id: null,
-          username: null
+          username: null,
+          story_unlocked: 1
         }
       });
     }
@@ -87,7 +91,8 @@ globalThis.loginOrRegister = async function (nama_lengkap) {
         success: true,
         data: {
           id: newUser.id,
-          username: newUser.nama_lengkap
+          username: newUser.nama_lengkap,
+          story_unlocked: newUser.story_unlocked
         }
       });
 
@@ -97,7 +102,8 @@ globalThis.loginOrRegister = async function (nama_lengkap) {
       success: false,
       data: {
         id: null,
-        username: null
+        username: null,
+        story_unlocked: 1
       }
     });
   }
@@ -151,5 +157,215 @@ globalThis.getUser = async function (nama_lengkap) {
   } catch (err) {
     console.error("❌ getUser exception:", err.message);
     return [];
+  }
+};
+
+
+globalThis.storeScore = async function (namaTabel, score) {
+  try {
+    // Ambil user dari localStorage
+    const userRaw = localStorage.getItem('user_basalogy');
+    if (!userRaw) {
+      console.error("❌ storeScore: no user in localStorage");
+      return { success: false, error: "no user in localStorage", data: null };
+    }
+
+    let user;
+    try {
+      user = JSON.parse(userRaw);
+    } catch (e) {
+      console.error("❌ storeScore: failed to parse localStorage user", e);
+      return { success: false, error: "invalid user in localStorage", data: null };
+    }
+
+    const nama_lengkap = user?.data?.username || user?.username || null;
+    if (!nama_lengkap) {
+      console.error("❌ storeScore: username not found in localStorage.user.data.username");
+      return { success: false, error: "username not found", data: null };
+    }
+
+    // VALIDASI NAMA TABEL (safeguard untuk mencegah SQL-injection-like misuse)
+    // Preferensi: pakai allowlist jika kamu cuma mengizinkan beberapa tabel.
+    const ALLOWED_TABLES = ["skill_menulis_tests", "skill_menulis_coba_tulises"]; // <-- sesuaikan jika perlu
+    if (!ALLOWED_TABLES.includes(namaTabel)) {
+      // fallback: very strict regex (lowercase, digits, underscore)
+      const safeName = typeof namaTabel === "string" && /^[a-z0-9_]+$/.test(namaTabel);
+      if (!safeName) {
+        console.error("❌ storeScore: invalid table name", namaTabel);
+        return { success: false, error: "invalid table name", data: null };
+      }
+      // optional: still warn
+      console.warn("⚠️ storeScore: table not in allowlist, proceeding with regex-validated name");
+    }
+
+    // Payload
+    const payload = {
+      nama_lengkap,
+      skor: score,
+      created_at: new Date().toISOString()
+    };
+
+    // Do POST to Supabase REST
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${namaTabel}`, {
+      method: "POST",
+      headers: {
+        ...headers, // asumsikan headers memuat Authorization / apikey yg kamu pakai
+        "Content-Type": "application/json",
+        "Prefer": "return=representation"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      console.error("❌ storeScore: insert failed:", text);
+      return { success: false, error: text, data: null };
+    }
+
+    const created = await res.json();
+    // Supabase return=representation biasanya mengembalikan array of created rows
+    const row = Array.isArray(created) && created.length > 0 ? created[0] : created;
+
+    console.log("✅ storeScore: inserted", row);
+    return { success: true, data: row, error: null };
+  } catch (err) {
+    console.error("❌ storeScore exception:", err);
+    return { success: false, error: err.message || String(err), data: null };
+  }
+};
+
+globalThis.getRanks = async function () {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/users`,
+      {
+        method: "GET",
+        headers
+      }
+    );
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error("❌ getRanks error:", err);
+      return { ranks: [], this_user_rank: null };
+    }
+
+    let data = await res.json();
+
+    // Urutkan by total_score desc
+    data.sort((a, b) => (b.total_score || 0) - (a.total_score || 0));
+
+    // Tambahkan rank ke tiap user
+    data = data.map((u, i) => ({
+      ...u,
+      rank: i + 1,
+    }));
+
+    // Cari user sekarang dari localStorage
+    const currentUser = JSON.parse(localStorage.getItem("user_basalogy"));
+    let thisUserRank = null;
+
+    if (currentUser && currentUser.data && currentUser.data.username) {
+      const found = data.find((u) => u.nama_lengkap === currentUser.data.username);
+      if (found) {
+        thisUserRank = found.rank;
+      }
+    }
+
+    console.log("✅ Ranks calculated:", data);
+    console.log("➡️ This user rank:", thisUserRank);
+
+    return {
+      ranks: data,
+      this_user_rank: thisUserRank,
+    };
+  } catch (err) {
+    console.error("❌ getRanks exception:", err.message);
+    return { ranks: [], this_user_rank: null };
+  }
+};
+
+globalThis.updateStoryUnlocked = async function (updateValue) {
+  try {
+    // 1️⃣ Ambil user dari localStorage
+    const userRaw = localStorage.getItem('user_basalogy');
+    if (!userRaw) {
+      console.error("❌ updateStoryUnlocked: no user in localStorage");
+      return { success: false, error: "no user in localStorage", data: null };
+    }
+
+    let user;
+    try {
+      user = JSON.parse(userRaw);
+    } catch (e) {
+      console.error("❌ updateStoryUnlocked: failed to parse user JSON", e);
+      return { success: false, error: "invalid user JSON", data: null };
+    }
+
+    const nama_lengkap = user?.data?.username || user?.username || null;
+    if (!nama_lengkap) {
+      console.error("❌ updateStoryUnlocked: username not found in localStorage.user.data.username");
+      return { success: false, error: "username not found", data: null };
+    }
+
+    // 2️⃣ Ambil data user dari Supabase
+    const resGet = await fetch(`${SUPABASE_URL}/rest/v1/users?nama_lengkap=eq.${nama_lengkap}`, {
+      method: "GET",
+      headers: {
+        ...headers,
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!resGet.ok) {
+      const text = await resGet.text();
+      console.error("❌ updateStoryUnlocked: failed to fetch user:", text);
+      return { success: false, error: text, data: null };
+    }
+
+    const users = await resGet.json();
+    if (!Array.isArray(users) || users.length === 0) {
+      console.error("❌ updateStoryUnlocked: user not found in DB");
+      return { success: false, error: "user not found", data: null };
+    }
+
+    const currentUser = users[0];
+    const currentUnlocked = currentUser.story_unlocked ?? 0;
+
+    // 3️⃣ Cek apakah perlu update
+    if (currentUnlocked >= updateValue) {
+      console.log("ℹ️ updateStoryUnlocked: no update needed (current =", currentUnlocked, ", new =", updateValue, ")");
+      return { success: true, data: currentUser, updated: false };
+    }
+
+    // 4️⃣ Lakukan update
+    const resUpdate = await fetch(
+      `${SUPABASE_URL}/rest/v1/users?nama_lengkap=eq.${nama_lengkap}`,
+      {
+        method: "PATCH",
+        headers: {
+          ...headers,
+          "Content-Type": "application/json",
+          "Prefer": "return=representation"
+        },
+        body: JSON.stringify({ story_unlocked: updateValue })
+      }
+    );
+
+    if (!resUpdate.ok) {
+      const text = await resUpdate.text();
+      console.error("❌ updateStoryUnlocked: update failed:", text);
+      return { success: false, error: text, data: null };
+    }
+
+    const updated = await resUpdate.json();
+    const updatedUser = Array.isArray(updated) ? updated[0] : updated;
+
+    console.log("✅ updateStoryUnlocked: updated successfully to", updateValue);
+    return { success: true, data: updatedUser, updated: true };
+
+  } catch (err) {
+    console.error("❌ updateStoryUnlocked exception:", err);
+    return { success: false, error: err.message || String(err), data: null };
   }
 };

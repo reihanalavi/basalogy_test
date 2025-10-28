@@ -10,6 +10,8 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Keyboard,
 		C3.Plugins.Text,
 		C3.Plugins.Json,
+		C3.Plugins.Audio,
+		C3.Plugins.Particles,
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.System.Acts.Wait,
 		C3.Plugins.System.Acts.GoToLayout,
@@ -17,6 +19,13 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.lunarray_LiteTween.Acts.SetTarget,
 		C3.Plugins.Sprite.Acts.SetSize,
 		C3.Plugins.System.Acts.SetLayerVisible,
+<<<<<<< HEAD
+=======
+		C3.Plugins.System.Cnds.CompareBoolVar,
+		C3.Plugins.Audio.Cnds.IsTagPlaying,
+		C3.Plugins.Audio.Acts.Play,
+		C3.Plugins.Audio.Acts.Stop,
+>>>>>>> origin
 		C3.Behaviors.Sin.Acts.SetEnabled,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Cnds.TriggerOnce,
@@ -39,8 +48,16 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.System.Acts.SubVar,
 		C3.Plugins.System.Acts.ToggleBoolVar,
+<<<<<<< HEAD
 		C3.JavaScriptInEvents.Menu_Event77_Act1,
 		C3.Plugins.System.Cnds.CompareBoolVar,
+=======
+		C3.Plugins.Audio.Acts.SetVolume,
+		C3.Plugins.System.Exps.int,
+		C3.Plugins.System.Exps.right,
+		C3.JavaScriptInEvents.Menu_Event113_Act2,
+		C3.JavaScriptInEvents.Menu_Event120_Act9,
+>>>>>>> origin
 		C3.Plugins.System.Acts.SetGroupActive,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
 		C3.Plugins.Keyboard.Cnds.OnKey,
@@ -52,18 +69,53 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Text.Acts.SetPos,
 		C3.Plugins.Text.Acts.SetPosToObject,
 		C3.Plugins.Text.Acts.SetText,
+		C3.Plugins.System.Cnds.For,
+		C3.Plugins.System.Exps.tokenat,
+		C3.Plugins.System.Acts.AddVar,
 		C3.Plugins.Touch.Cnds.IsTouchingObject,
 		C3.JavaScriptInEvents.SaveGame_Event1_Act1,
 		C3.Plugins.Sprite.Acts.SetX,
 		C3.Plugins.Sprite.Acts.SetPosToObject,
+<<<<<<< HEAD
 		C3.Plugins.System.Acts.AddVar,
+=======
+>>>>>>> origin
 		C3.Plugins.System.Acts.ResetPersisted,
 		C3.Plugins.System.Acts.ResetGlobals,
 		C3.Plugins.System.Acts.SetBoolVar,
 		C3.Plugins.System.Cnds.Compare,
+<<<<<<< HEAD
 		C3.Plugins.System.Exps.tokenat,
 		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Plugins.System.Exps.int
+=======
+		C3.Plugins.Sprite.Acts.SetAnim,
+		C3.Plugins.Sprite.Cnds.IsAnimPlaying,
+		C3.Plugins.Sprite.Acts.Spawn,
+		C3.Plugins.System.Cnds.PickRandom,
+		C3.Plugins.Sprite.Acts.SetInstanceVar,
+		C3.Plugins.Sprite.Acts.Destroy,
+		C3.JavaScriptInEvents["Tes-SkillMenulis_Event45_Act6"],
+		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
+		C3.Plugins.Sprite.Exps.AnimationName,
+		C3.Plugins.Sprite.Exps.AnimationFrame,
+		C3.Plugins.Sprite.Acts.AddInstanceVar,
+		C3.Plugins.Sprite.Exps.ImagePointCount,
+		C3.JavaScriptInEvents["CobaTulis-SkillMenulis_Event27_Act3"],
+		C3.Plugins.Touch.Cnds.OnTouchStart,
+		C3.Plugins.Touch.Cnds.OnTouchEnd,
+		C3.Plugins.Touch.Cnds.IsInTouch,
+		C3.Plugins.Touch.Exps.X,
+		C3.Plugins.Touch.Exps.Y,
+		C3.Plugins.System.Acts.CreateObject,
+		C3.Plugins.System.Cnds.Else,
+		C3.Plugins.Sprite.Cnds.OnCollision,
+		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
+		C3.Plugins.Sprite.Acts.SetOpacity,
+		C3.Plugins.Sprite.Exps.Opacity,
+		C3.Plugins.Sprite.Exps.AnimationFrameCount,
+		C3.JavaScriptInEvents.SkillKomunikasi_Event27_Act1
+>>>>>>> origin
 	];
 };
 self.C3_JsPropNameTable = [
@@ -107,17 +159,74 @@ self.C3_JsPropNameTable = [
 	{frame: 0},
 	{indicator: 0},
 	{modal: 0},
+<<<<<<< HEAD
+=======
+	{Audio: 0},
+	{jawaban: 0},
+	{pertanyaan: 0},
+	{soal_title: 0},
+	{nomor_soal: 0},
+	{animation_soal: 0},
+	{questionPicker: 0},
+	{right_answer: 0},
+	{spawner_rightwrong: 0},
+	{wrong_answer: 0},
+	{trophy: 0},
+	{number_brush: 0},
+	{guide: 0},
+	{brush: 0},
+	{passed: 0},
+	{brush_indicator: 0},
+	{checked_color: 0},
+	{rank: 0},
+	{rank_panel: 0},
+	{rank_user: 0},
+	{rank_text: 0},
+	{score_text: 0},
+	{komunikasi_bg: 0},
+	{komunikasi_chat: 0},
+	{level: 0},
+	{char: 0},
+	{komunikasi_pin: 0},
+	{character: 0},
+	{Group3: 0},
+>>>>>>> origin
 	{isLoggedIn: 0},
 	{MENU_STATE: 0},
 	{CAMERA_STATE: 0},
 	{isMusic: 0},
 	{LOGIN_STATE: 0},
+	{i: 0},
+	{rankName: 0},
+	{rankScore: 0},
 	{USERNAME: 0},
 	{SUPABASE_ID: 0},
 	{SUPABASE_USERNAME: 0},
+<<<<<<< HEAD
 	{SUPABASE_SUCCESS: 0},
 	{pelajari_huruf_frame: 0},
 	{modalOpened: 0}
+=======
+	{SUPABASE_STORY: 0},
+	{SUPABASE_SUCCESS: 0},
+	{pelajari_huruf_frame: 0},
+	{modalOpened: 0},
+	{tes_skillmenulis_state: 0},
+	{jawaban_benar: 0},
+	{jawaban_salah: 0},
+	{isAnswered: 0},
+	{isFinished: 0},
+	{cobatulis_skillmenulis_state: 0},
+	{isDrawing: 0},
+	{brushed: 0},
+	{totalBrush: 0},
+	{selected_color: 0},
+	{firstDrawed: 0},
+	{komunikasi_frame: 0},
+	{komunikasi_level: 0},
+	{komunikasi_state: 0},
+	{kebudayaan_frame: 0}
+>>>>>>> origin
 ];
 
 self.InstanceType = {
@@ -142,5 +251,32 @@ self.InstanceType = {
 	bg_color_belajar: class extends self.ITiledBackgroundInstance {},
 	pelajari_huruf_judul: class extends self.ISpriteInstance {},
 	indicator: class extends self.ISpriteInstance {},
+<<<<<<< HEAD
 	modal: class extends self.ISpriteInstance {}
+=======
+	modal: class extends self.ISpriteInstance {},
+	Audio: class extends self.IInstance {},
+	pertanyaan: class extends self.ISpriteInstance {},
+	jawaban: class extends self.ISpriteInstance {},
+	soal_title: class extends self.ISpriteInstance {},
+	questionPicker: class extends self.ISpriteInstance {},
+	right_answer: class extends self.IParticlesInstance {},
+	spawner_rightwrong: class extends self.ISpriteInstance {},
+	wrong_answer: class extends self.IParticlesInstance {},
+	trophy: class extends self.ISpriteInstance {},
+	guide: class extends self.ISpriteInstance {},
+	brush: class extends self.ISpriteInstance {},
+	brush_indicator: class extends self.ISpriteInstance {},
+	checked_color: class extends self.ISpriteInstance {},
+	rank: class extends self.ISpriteInstance {},
+	rank_panel: class extends self.ISpriteInstance {},
+	rank_user: class extends self.ISpriteInstance {},
+	rank_text: class extends self.ITextInstance {},
+	score_text: class extends self.ITextInstance {},
+	komunikasi_bg: class extends self.ISpriteInstance {},
+	komunikasi_chat: class extends self.ISpriteInstance {},
+	komunikasi_pin: class extends self.ISpriteInstance {},
+	character: class extends self.ISpriteInstance {},
+	Group3: class extends self.ISpriteInstance {}
+>>>>>>> origin
 }
